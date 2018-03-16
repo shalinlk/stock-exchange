@@ -4,16 +4,24 @@
 
 namespace org.se.exchange
 
+asset Share identified by shareId {
+  o String shareId
+  o Double currentPrice
+  --> Company Company
+  --> Trader holder //fixme : holder can be the company or trader;
+}
+
 participant User identified by email {
   o String email
+  o String name
 }
 
-asset SampleAsset identified by assetId {
-  o String assetId
-  o String value
+participant Trader extends User {
+  o Double balance
 }
 
-transaction ChangeAssetValue {
-  o String newValue
-  --> Asset relatedAsset
+participant CompanyOwner extends User {}
+
+participant Company extends Trader{
+  --> CompanyOwner owner  
 }
