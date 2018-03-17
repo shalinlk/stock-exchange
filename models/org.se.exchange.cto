@@ -7,8 +7,17 @@ namespace org.se.exchange
 asset Share identified by shareId {
   o String shareId
   o Double currentPrice
-  --> Company Company
+  --> Company company
   --> Trader holder //fixme : holder can be the company or trader;
+}
+
+asset Proposal identified by propaslId {
+  o String propaslId
+  o TradeStatus propsalStatus
+  o Integer count
+  o Double proposedPrice
+  -->Trader proposer //fixme : one party shouldn't be able to put another party as proposer
+  -->Company company
 }
 
 participant User identified by email {
@@ -20,8 +29,33 @@ participant Trader extends User {
   o Double balance
 }
 
+//CompanyOwner should only be able to issue shares of a company
 participant CompanyOwner extends User {}
 
 participant Company extends Trader{
   --> CompanyOwner owner  
 }
+
+enum TradeStatus {
+  o FOR_SALE
+  o FOR_BUY
+  o SOLD_OUT
+}
+
+transaction ShareIssue {
+  o String detail
+  o Double count
+  --> Company company
+}
+
+transaction Propose {
+  -->Proposal proposal
+}
+
+transaction ModifyProposal {
+  o Double newPrice
+  -->Proposal proposal //fix : will be better to replace with 
+  // propose transaction id or proposal id.
+}
+
+//todo : Proposal time out has to be implemented
