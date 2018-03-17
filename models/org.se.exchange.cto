@@ -16,8 +16,7 @@ asset Proposal identified by propaslId {
   o TradeStatus propsalStatus
   o Integer count
   o Double proposedPrice
-  -->Trader proposer //fixme : one party shouldn't be able to put another party as proposer
-  -->Company company
+  --> Company company//Trader can be obtained by getCurrentParticipant()
 }
 
 participant User identified by email {
@@ -33,6 +32,7 @@ participant Trader extends User {
 participant CompanyOwner extends User {}
 
 participant Company extends Trader{
+  o Integer issuedShareCount
   --> CompanyOwner owner  
 }
 
@@ -44,18 +44,18 @@ enum TradeStatus {
 
 transaction ShareIssue {
   o String detail
-  o Double count
+  o Integer count
+  o Double price
   --> Company company
 }
 
 transaction Propose {
-  -->Proposal proposal
+  --> Proposal proposal
 }
 
 transaction ModifyProposal {
   o Double newPrice
-  -->Proposal proposal //fix : will be better to replace with 
-  // propose transaction id or proposal id.
+  --> Proposal proposal //fix : will be better to replace with propose transaction id or proposal id.
 }
 
 //todo : Proposal time out has to be implemented
