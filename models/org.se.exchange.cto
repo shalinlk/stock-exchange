@@ -11,12 +11,13 @@ asset Share identified by shareId {
   --> Trader holder //fixme : holder can be the company or trader;
 }
 
-asset Proposal identified by propaslId {
-  o String propaslId
-  o TradeStatus propsalStatus
+asset Proposal identified by proposalId {
+  o String proposalId
+  o TradeStatus proposalStatus
   o Integer count
   o Double proposedPrice
-  --> Company company//Trader can be obtained by getCurrentParticipant()
+  --> Company company
+  --> Trader trader//Trader can be obtained by getCurrentParticipant()
 }
 
 participant User identified by email {
@@ -29,9 +30,9 @@ participant Trader extends User {
 }
 
 //CompanyOwner should only be able to issue shares of a company
-participant CompanyOwner extends User {}
+participant CompanyOwner extends Trader {}
 
-participant Company extends Trader{
+participant Company extends User{
   o Integer issuedShareCount
   --> CompanyOwner owner  
 }
@@ -39,7 +40,6 @@ participant Company extends Trader{
 enum TradeStatus {
   o FOR_SALE
   o FOR_BUY
-  o SOLD_OUT
 }
 
 transaction ShareIssue {
