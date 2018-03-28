@@ -13,9 +13,9 @@ asset Share identified by shareId {
 
 asset Proposal identified by proposalId {
   o String proposalId
-  o TradeStatus proposalStatus
+  o TradeStatus type
   o Integer count
-  o Double proposedPrice
+  o Double price
   --> Company company
   --> Trader trader//Trader can be obtained by getCurrentParticipant()
 }
@@ -50,7 +50,10 @@ transaction ShareIssue {
 }
 
 transaction Propose {
-  --> Proposal proposal
+  o TradeStatus proposalType
+  o Integer count
+  o Double price
+  --> Company company
 }
 
 transaction ModifyProposal {

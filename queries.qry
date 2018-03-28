@@ -2,8 +2,8 @@ query selectSaleProposalOfCompany {
   description: "select sale proposals of specific company's share"
   statement:
       SELECT org.se.exchange.Proposal
-        WHERE (company == _$company AND proposalStatus == 'FOR_SALE' AND proposedPrice <= _$price)
-         ORDER BY proposedPrice ASC
+        WHERE (company == _$company AND type == 'FOR_SALE' AND price <= _$price)
+        
 }
 
 query selectShareByUserAndCompany {
@@ -18,6 +18,6 @@ query selectBuyProposalOfCompany {
   description: "select buy proposals of specific company's share"
   statement:
       SELECT org.se.exchange.Proposal
-        WHERE (company == _$company AND proposalStatus == 'FOR_BUY' AND proposedPrice >= _$price)
-         ORDER BY proposedPrice ASC
+        WHERE (company == _$company AND type == 'FOR_BUY' AND price >= _$price)
+        
 }
