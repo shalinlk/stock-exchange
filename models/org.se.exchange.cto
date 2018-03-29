@@ -34,7 +34,7 @@ participant CompanyOwner extends Trader {}
 
 participant Company extends User{
   o Integer issuedShareCount
-  --> CompanyOwner owner  
+  --> Trader owner  
 }
 
 enum TradeStatus {
