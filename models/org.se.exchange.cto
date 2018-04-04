@@ -20,7 +20,7 @@ asset Proposal identified by proposalId {
   --> Trader trader//Trader can be obtained by getCurrentParticipant()
 }
 
-participant User identified by email {
+abstract participant User identified by email {
   o String email
   o String name
 }
@@ -28,9 +28,6 @@ participant User identified by email {
 participant Trader extends User {
   o Double balance
 }
-
-//CompanyOwner should only be able to issue shares of a company
-participant CompanyOwner extends Trader {}
 
 participant Company extends User{
   o Integer issuedShareCount
