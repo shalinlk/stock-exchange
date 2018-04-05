@@ -1,15 +1,91 @@
 /**
- * Access control rules for tutorial-network
+ * Access control rules for stock exchange network
  */
 
- //FIXME : PERMISSION SHOULD BE FINE GRAINED.
- //FIXME : FOLLOWING RULE GIVES ALL PERMISSIONS TO ALL
-rule Default {
-    description: "Allow all participants access to all resources"
-    participant: "ANY"
-    operation: ALL
-    resource: "org.se.exchange.*"
-    action: ALLOW
+rule OwnerCompanyShareIssue {
+  description: "Only the owner of a company should be able to update the company through ShareIssue transaction"
+  participant(p): "org.se.exchange.Trader"
+  operation: UPDATE
+  resource(c): "org.se.exchange.Company"
+  transaction: "org.se.exchange.ShareIssue"
+  condition: (c.owner.getIdentifier() == p.getIdentifier())
+  action: ALLOW
+}
+
+rule OwnerShareShareIssue {
+  description: "Only the owner of a company should be able to issue share of the company through ShareIssue transaction"
+  participant: "org.se.exchange.Trader"
+  operation: CREATE
+  resource: "org.se.exchange.Share"
+  transaction: "org.se.exchange.ShareIssue"
+  action: ALLOW
+}
+
+rule TraderShareIssue {
+  description: "Trader should have access to share issue transction"
+  participant: "org.se.exchange.Trader"
+  operation: CREATE
+  resource: "org.se.exchange.ShareIssue"
+  action: ALLOW
+}
+
+rule TraderSharePropose {
+  description: "Trader should be able to change ownership of share through Propose transaction"
+  participant: "org.se.exchange.Trader"
+  operation: READ, UPDATE
+  resource: "org.se.exchange.Share"
+  transaction: "org.se.exchange.Propose"
+  action: ALLOW
+}
+
+rule TraderProposalPropose {
+  description: "Trader should have all operation access on proposal through propose transaction"
+  participant: "org.se.exchange.Trader"
+  operation: ALL
+  resource: "org.se.exchange.Proposal"
+  transaction: "org.se.exchange.Propose"
+  action: ALLOW
+}
+
+rule TraderProposal {
+  description: "All traders should have access to proposal transaction"
+  participant: "org.se.exchange.Trader"
+  operation: CREATE
+  resource: "org.se.exchange.Propose"
+  action: ALLOW
+}
+
+rule TraderTraderProposal {
+  description: "Trader should be able to update other traders balance through proposal settlement"
+  participant: "org.se.exchange.Trader"
+  operation: UPDATE
+  resource: "org.se.exchange.Trader"
+  transaction: "org.se.exchange.Propose"
+  action: ALLOW
+}
+
+rule ViewAccessForParticipant {
+  description: "Participnt should have read access to all resources"
+  participant: "org.se.exchange.Trader"
+  operation: READ
+  resource: "org.se.exchange.**"
+  action: ALLOW
+}
+
+rule NetworkAdminUserCompanyACL {
+  description: "Allow network admin full access on company participant"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "org.se.exchange.Company"
+  action: ALLOW
+}
+
+rule NetworkAdminUserTraderACL {
+  description: "Allow network admin full access on company participant"
+  participant: "org.hyperledger.composer.system.NetworkAdmin"
+  operation: ALL
+  resource: "org.se.exchange.Trader"
+  action: ALLOW
 }
 
 rule SystemACL {
@@ -19,3 +95,11 @@ rule SystemACL {
   resource: "org.hyperledger.composer.system.**"
   action: ALLOW
 }
+
+// rule NetworkAdminSystem {
+//   description: "Allow network admin to access all system resources"
+//   participant: "org.hyperledger.composer.system.NetworkAdmin"
+//   operation: ALL
+//   resource: "org.hyperledger.composer.system.**"
+//   action: ALLOW
+// }
