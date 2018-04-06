@@ -6,7 +6,7 @@ namespace org.se.exchange
 
 asset Share identified by shareId {
   o String shareId
-  o Double currentPrice
+  o Integer count
   --> Company company
   --> Trader holder //fixme : holder can be the company or trader;
 }
@@ -23,7 +23,7 @@ asset Proposal identified by proposalId {
 asset Trade identified by tradeId {
   o String tradeId
   o Integer count
-  o Integer price
+  o Double price
   --> Trader buyer
   --> Trader seller
   --> Company company

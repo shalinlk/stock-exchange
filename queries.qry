@@ -6,12 +6,19 @@ query selectSaleProposalOfCompany {
         
 }
 
-query selectShareByUserAndCompany {
+query selectShareByUserAndCompanyLimit {
   description: "select the shares os specific company belonging to specific user"
   statement:
       SELECT org.se.exchange.Share
         WHERE (holder == _$owner AND company == _$company)
         LIMIT _$limit
+}
+
+query selectShareByUserAndCompany {
+  description: "select the shares os specific company belonging to specific user"
+  statement:
+      SELECT org.se.exchange.Share
+        WHERE (holder == _$owner AND company == _$company)
 }
 
 query selectBuyProposalOfCompany {
