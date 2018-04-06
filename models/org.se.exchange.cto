@@ -20,6 +20,15 @@ asset Proposal identified by proposalId {
   --> Trader trader//Trader can be obtained by getCurrentParticipant()
 }
 
+asset Trade identified by tradeId {
+  o String tradeId
+  o Integer count
+  o Integer price
+  --> Trader buyer
+  --> Trader seller
+  --> Company company
+}
+
 abstract participant User identified by email {
   o String email
   o String name

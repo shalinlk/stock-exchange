@@ -64,6 +64,15 @@ rule TraderTraderProposal {
   action: ALLOW
 }
 
+rule TraderTradeProposal {
+  description: "Trader should be able to create trade records only through proposal settlement"
+  participant: "org.se.exchange.Trader"
+  operation: CREATE
+  resource: "org.se.exchange.Trade"
+  transaction: "org.se.exchange.Propose"
+  action: ALLOW
+}
+
 rule ViewAccessForParticipant {
   description: "Participnt should have read access to all resources"
   participant: "org.se.exchange.Trader"
