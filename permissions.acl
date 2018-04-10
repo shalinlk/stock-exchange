@@ -21,6 +21,16 @@ rule OwnerShareShareIssue {
   action: ALLOW
 }
 
+rule OwnerSharePropose {
+  description: "Trader should be able to create, edit and delete share entry through propose transaction"
+  participant: "org.se.exchange.Trader"
+  operation: ALL
+  resource: "org.se.exchange.Share"
+  transaction: "org.se.exchange.Propose"
+  action: ALLOW
+}
+
+
 rule TraderShareIssue {
   description: "Trader should have access to share issue transction"
   participant: "org.se.exchange.Trader"

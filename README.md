@@ -1,1 +1,2 @@
-# org.se.exchange
+# stock-exchange
+POC - Hyperledger Fabric Composer
