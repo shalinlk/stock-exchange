@@ -1,3 +1,6 @@
+## Disclaimer ##
+Active contribution and maintenance of Composer project has been discontinued by IBM. Online playground for testing composer solutions is also unavailable as of now. This repo has references to both :-( 
+
 # POC - Hyperledger Fabric Composer
 A bare minimum stock-exchange application written as a POC for Hyperledger Fabric Composer.
 
